@@ -10,7 +10,7 @@ class IlluminatenewwscrapSpider(scrapy.Spider):
         illuminaires = response.css('div.WdR1o')
         for illuminaire in illuminaires:
             yield {
-                'name' : illuminaire.css("span.itemprop = 'name'").get(),
-                'price' : illuminaire.css('span.ui-LD-ZU KIkOH').get(),
+                'name' : illuminaire.css('div.wYUX2 span::text').get(),
+                'price' : illuminaire.css('div.q5Uds span::text').get(),
                 'link' : illuminaire.css('a').attrib['href']
             }
