@@ -1,6 +1,5 @@
 import scrapy
 
-
 class IlluminatenewwscrapSpider(scrapy.Spider):
     name = "illuminatenewwscrap"
     allowed_domains = ["divan.ru"]
@@ -9,8 +8,14 @@ class IlluminatenewwscrapSpider(scrapy.Spider):
     def parse(self, response):
         illuminaires = response.css('div.WdR1o')
         for illuminaire in illuminaires:
+            name = illuminaire.css('div.wYUX2 span::text').get()
+            price = illuminaire.css('div.q5Uds span::text').get()
+            link = illuminaire.css('a').attrib['href']
+
+            price_with_currency = f"{price} рублей"
+
             yield {
-                'name' : illuminaire.css('div.wYUX2 span::text').get(),
-                'price' : illuminaire.css('div.q5Uds span::text').get(),
-                'link' : illuminaire.css('a').attrib['href']
+                'name': f"{name}",
+                'price': f"{price_with_currency}",
+                'link': f"{link}"
             }
